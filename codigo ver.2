@@ -1,0 +1,460 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct{
+
+    char texto[20];
+    char alternativa[4][20];
+    char letra;
+    int dificuldade;
+    int ativo;
+}Perguntas;
+
+int menu(Perguntas pergunta[]){
+
+    int mod = 1;
+    char opcao;
+
+printf("Bem vindo, Jogador.\n\nPara começar o jogo selecione a opção que você gostaria! Digitando...\n\n☞ L para Listar as perguntas selecionadas: \n☞ P para Pesquisar:\n☞ A para alterar \n☞ E para Excluir\n☞ I para inserir \n\n☞☞");
+        scanf("%c", &opcao);
+
+    if(strcaselen(opcao ,"i") == 0){ 
+
+    inserir(pergunta, mod);
+    }//if
+
+    else if(strcaselen(opcao ,"e") == 0){ 
+
+    excluir(pergunta, mod);
+    }//else if
+
+    else if(strcaselen(opcao ,"l") == 0){ 
+
+    listar(pergunta);
+
+    }//else if
+
+    else if(strcaselen(opcao ,"l") == 0){ 
+        
+    pesquisar(pergunta);
+
+    }//else if
+
+}//menu
+
+/**
+ * @brief Para inserir ativos que permitem as perguntas serem usados
+ * 
+ * @return int 
+ */
+
+int inserir(Perguntas pergunta[], int mod){
+    
+    int valor;
+
+if(mod == 1){
+        for(int i = 0; i < 20; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 1;
+
+            }//else
+   
+        }//if
+
+    if(mod == 2){
+        for(int i = 20; i < 40; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 1;
+
+            }//else
+   
+        }//if
+
+        if(mod == 3){
+        for(int i = 40; i < 55; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 1;
+
+            }//else
+   
+        }//if
+
+        if(mod == 4){
+        for(int i = 55; i < 70; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 1;
+
+            }//else
+   
+        }//if
+
+        if(mod == 5){
+        for(int i = 70; i < 80; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara retornar a dificuldade fácil insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod = 1;
+
+            }else{
+
+            pergunta[valor].ativo = 1;
+
+            }//else
+   
+        }//if
+
+    inserir(pergunta, mod);
+
+}//inserir
+
+int excluir(Perguntas pergunta[], int mod){
+    
+    int valor;
+
+if(mod == 1){
+        for(int i = 0; i < 20; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 0;
+
+            }//else
+   
+        }//if
+
+    if(mod == 2){
+        for(int i = 20; i < 40; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 0;
+
+            }//else
+   
+        }//if
+
+        if(mod == 3){
+        for(int i = 40; i < 55; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 0;
+
+            }//else
+   
+        }//if
+
+        if(mod == 4){
+        for(int i = 55; i < 70; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara a próxima dificuldade insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod++;
+
+            }else{
+
+            pergunta[valor].ativo = 0;
+
+            }//else
+   
+        }//if
+
+        if(mod == 5){
+        for(int i = 70; i < 80; i++){
+            if(pergunta[i].ativo == 0){
+            printf("✔");
+
+            }else{
+            printf("✘");
+
+            }//else
+
+            printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            
+
+            }//for
+
+            printf("QUAL O NUMERO QUE VOCÊ QUER?? \nSe quiser sair coloque -1\nPara retornar a dificuldade fácil insira -2:  ");
+            scanf("%d", &valor);
+
+            if(valor == -1){
+            return 0;
+
+            }else if(valor == -2){
+            mod = 1;
+
+            }else{
+
+            pergunta[valor].ativo = 0;
+
+            }//else
+   
+        }//if
+
+    excluir(pergunta, mod);
+
+}//excluir
+
+int listar(Perguntas pergunta[]){
+
+        for(int i = 0; i < 80; i++){
+
+            if(pergunta[i].ativo == 1){
+                
+                printf("%d. %s,%s,%s,%s,%s,,%d\n",i + 1, pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].dificuldade);
+
+            }//if
+
+        }//for
+        
+    }//listar
+
+int pesquisar(Perguntas pergunta[]){
+
+    char *comparar = (char*)malloc(20);
+
+    printf("Coloque uma parte da pergunta:  ");
+    fgets(comparar, 20, stdin);
+    comparar[strcspn(comparar, "\n")] = '\0';
+    setbuf(stdin, NULL);
+
+    if(strcasecmp(comparar, pergunta[i].texto))//!!
+
+
+
+
+}//pesquisar
+
+int main(){
+
+    FILE* arq = fopen("onepiece.CSV","r");
+    Perguntas pergunta[80];
+    
+    int ready = 0;
+    
+    int valor;
+
+
+    if(pergunta == NULL){
+        perror("Espaço insuficiente.\n");
+        exit(1);
+    }//if
+
+    Perguntas *alternativas = (Perguntas*)malloc(100);   
+    if(alternativas == NULL){
+        perror("Espaço insuficiente.\n");
+        exit(1);
+    }//if
+
+    //Pega os textos e variaveis do onepiece.CSV para a Struct do Perguntas.
+    for(int i = 0; i < 80; i++){
+    fscanf(arq, "%s,%s,%s,%s,%s,%s,%d\n",pergunta[i].texto, pergunta[i].alternativa[0], pergunta[i].alternativa[1], pergunta[i].alternativa[2], pergunta[i].alternativa[3], pergunta[i].letra, pergunta[i].dificuldade);
+    }//for
+
+
+    menu(pergunta);
+   
+    return 0;
+
+}//main
