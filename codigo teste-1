@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <ctype.h>
+#include <time.h>//biblioteca para a função rand;
+#include <ctype.h>//biblioteca para usar o toupper;
 
 #define MAX_PERGUNTAS 100
 
 typedef struct {
-    char texto[200];
+    char texto[200];  
     char alternativa[4][100];
     char letra;
     int dificuldade;
@@ -32,10 +32,10 @@ void carregarPerguntasCSV(const char* nomeArquivo) {
             p.ativo = 1;
             perguntas = realloc(perguntas, (totalPerguntas + 1) * sizeof(Pergunta));
             perguntas[totalPerguntas++] = p;
-        }
-    }
+        }//separa as alternativas e o enunciado por vírgula. No caso ele lê os valores até a vírgula;
+    }//feof = função para ver se chegou no End of File;
     fclose(arq);
-}
+}//carrega as perguntas e alternativas;
 
 void salvarBinario(const char* nomeArquivo) {
     FILE* arq = fopen(nomeArquivo, "wb");
@@ -43,7 +43,7 @@ void salvarBinario(const char* nomeArquivo) {
     fwrite(&totalPerguntas, sizeof(int), 1, arq);
     fwrite(perguntas, sizeof(Pergunta), totalPerguntas, arq);
     fclose(arq);
-}
+}//salva em binário;
 
 void carregarBinario(const char* nomeArquivo) {
     FILE* arq = fopen(nomeArquivo, "rb");
@@ -52,7 +52,7 @@ void carregarBinario(const char* nomeArquivo) {
     perguntas = malloc(totalPerguntas * sizeof(Pergunta));
     fread(perguntas, sizeof(Pergunta), totalPerguntas, arq);
     fclose(arq);
-}
+}//carrega o arquivo em binário;
 
 void exportarCSV(const char* nomeArquivo) {
     FILE* arq = fopen(nomeArquivo, "w");
@@ -68,10 +68,12 @@ void exportarCSV(const char* nomeArquivo) {
             perguntas[i].dificuldade);
     }
     fclose(arq);
-}
+}//exporta para CSV;
+
 void removerPergunta(int indice) {
     perguntas[indice].ativo = 0;
-}
+}//remove perguntas que ja foram
+
 
 void listarPerguntas() {
     for (int i = 0; i < totalPerguntas; i++) {
@@ -83,7 +85,74 @@ void listarPerguntas() {
             perguntas[i].alternativa[3],
             perguntas[i].letra);
     }
-}
+}//mostra as perguntas
+
+void adicionarPergunta() {
+    Pergunta p;
+    printf("Digite o texto da pergunta: ");
+    getchar();  // limpa o buffer
+    fgets(p.texto, sizeof(p.texto), stdin);
+    p.texto[strcspn(p.texto, "\n")] = '\0';
+
+    for (int i = 0; i < 4; i++) {
+        printf("Digite a alternativa %c: ", 'A' + i);
+        fgets(p.alternativa[i], sizeof(p.alternativa[i]), stdin);
+        p.alternativa[i][strcspn(p.alternativa[i], "\n")] = '\0';
+    }
+
+    printf("Digite a letra correta (A-D): ");
+    scanf(" %c", &p.letra);
+
+    printf("Digite a dificuldade (1 a 5): ");
+    scanf("%d", &p.dificuldade);
+
+    p.ativo = 1;
+
+    perguntas = realloc(perguntas, (totalPerguntas + 1) * sizeof(Pergunta));
+    perguntas[totalPerguntas++] = p;
+
+    printf("Pergunta adicionada com sucesso!\n");
+}//adiciona uma nova pergunta;
+
+void pesquisarPergunta() {
+    char termo[200];
+    printf("Digite o termo de busca: ");
+    getchar();  // Limpa o buffer
+    fgets(termo, sizeof(termo), stdin);
+    termo[strcspn(termo, "\n")] = '\0';
+
+    int achou = 0;
+    for (int i = 0; i < totalPerguntas; i++) {
+        if (strstr(perguntas[i].texto, termo)) {
+            printf("[%d] %s (Dificuldade: %d)\nA)%s B)%s C)%s D)%s\nCorreta: %c\n\n", 
+                i+1, perguntas[i].texto, perguntas[i].dificuldade,
+                perguntas[i].alternativa[0],
+                perguntas[i].alternativa[1],
+                perguntas[i].alternativa[2],
+                perguntas[i].alternativa[3],
+                perguntas[i].letra);
+            achou = 1;
+        }
+    }
+    if (!achou) {
+        printf("Nenhuma pergunta encontrada com o termo: %s\n", termo);
+    }
+}//pesquisa por uma pergunta;
+
+void excluirPergunta(int indice) {
+    if (indice < 0 || indice >= totalPerguntas) {
+        printf("Índice inválido!\n");
+        return;
+    }
+
+    for (int i = indice; i < totalPerguntas - 1; i++) {
+        perguntas[i] = perguntas[i + 1];
+    }
+    totalPerguntas--;
+    perguntas = realloc(perguntas, totalPerguntas * sizeof(Pergunta));
+
+    printf("Pergunta excluída com sucesso!\n");
+}//exclui uma pergunta;
 
 void perguntaAleatoriaPorNivel(int nivel, Pergunta* p) {
     int indices[MAX_PERGUNTAS];
@@ -160,17 +229,28 @@ void jogar() {
 void menu() {
     int opcao;
     do {
-        printf("\n1. Listar Perguntas\n2. Jogar\n3. Exportar CSV\n4. Sair\nEscolha: ");
+        printf("\n1. Listar Perguntas\n2. Jogar\n3. Exportar CSV\n");
+        printf("4. Adicionar Pergunta\n5. Pesquisar Pergunta\n6. Excluir Pergunta\n7. Sair\nEscolha: ");
         scanf("%d", &opcao);
+
+        int indice;
         switch (opcao) {
-            case 1: listarPerguntas(); break;
+            case 1: listarPerguntas(); break;//por algum motivo a função só lista 69 perguntas;
             case 2: jogar(); break;
             case 3: exportarCSV("exportado.csv"); printf("Exportado com sucesso!\n"); break;
-            case 4: salvarBinario("perguntas.bin"); printf("Salvando e saindo...\n"); break;
+            case 4: adicionarPergunta(); break;
+            case 5: pesquisarPergunta(); break;
+            case 6:
+                listarPerguntas();
+                printf("Digite o índice da pergunta a excluir: ");
+                scanf("%d", &indice);
+                excluirPergunta(indice - 1);
+                break;
+            case 7: salvarBinario("perguntas.bin"); printf("Salvando e saindo...\n"); break;
             default: printf("Opção inválida!\n");
         }
-    } while (opcao != 4);
-}
+    } while (opcao != 7);
+}//menu de opções
 
 int main() {
     carregarBinario("perguntas.bin");
@@ -181,4 +261,4 @@ int main() {
     menu();
     free(perguntas);
     return 0;
-}
+}//main
