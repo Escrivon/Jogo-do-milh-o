@@ -12,7 +12,7 @@ typedef struct {
     char letra;
     int dificuldade;
     int ativo;
-} Pergunta;
+} Pergunta;//struct das perguntas;
 
 Pergunta* perguntas = NULL;
 int totalPerguntas = 0;
@@ -22,7 +22,7 @@ void carregarPerguntasCSV(const char* nomeArquivo) {
     if (!arq) {
         printf("Arquivo CSV não encontrado.\n");
         return;
-    }
+    }//retorna caso não ache o arquivo;
 
     while (!feof(arq)) {
         Pergunta p;
@@ -92,24 +92,24 @@ void adicionarPergunta() {
     printf("Digite o texto da pergunta: ");
     getchar();  // limpa o buffer
     fgets(p.texto, sizeof(p.texto), stdin);
-    p.texto[strcspn(p.texto, "\n")] = '\0';
+    p.texto[strcspn(p.texto, "\n")] = '\0';//le o enunciado da nova pergunta;
 
     for (int i = 0; i < 4; i++) {
         printf("Digite a alternativa %c: ", 'A' + i);
         fgets(p.alternativa[i], sizeof(p.alternativa[i]), stdin);
         p.alternativa[i][strcspn(p.alternativa[i], "\n")] = '\0';
-    }
+    }//le as alternativas da pergunta;
 
     printf("Digite a letra correta (A-D): ");
-    scanf(" %c", &p.letra);
+    scanf(" %c", &p.letra);//le a alternativa correta;
 
     printf("Digite a dificuldade (1 a 5): ");
-    scanf("%d", &p.dificuldade);
+    scanf("%d", &p.dificuldade);//le a dificuldade;
 
     p.ativo = 1;
 
     perguntas = realloc(perguntas, (totalPerguntas + 1) * sizeof(Pergunta));
-    perguntas[totalPerguntas++] = p;
+    perguntas[totalPerguntas++] = p;//add a pergunta;
 
     printf("Pergunta adicionada com sucesso!\n");
 }//adiciona uma nova pergunta;
@@ -119,7 +119,7 @@ void pesquisarPergunta() {
     printf("Digite o termo de busca: ");
     getchar();  // Limpa o buffer
     fgets(termo, sizeof(termo), stdin);
-    termo[strcspn(termo, "\n")] = '\0';
+    termo[strcspn(termo, "\n")] = '\0';//recebe o enunciado da pergunta;
 
     int achou = 0;
     for (int i = 0; i < totalPerguntas; i++) {
@@ -136,7 +136,7 @@ void pesquisarPergunta() {
     }
     if (!achou) {
         printf("Nenhuma pergunta encontrada com o termo: %s\n", termo);
-    }
+    }//retorna isso caso não ache a pergunta;
 }//pesquisa por uma pergunta;
 
 void excluirPergunta(int indice) {
@@ -167,7 +167,7 @@ void perguntaAleatoriaPorNivel(int nivel, Pergunta* p) {
 
     if (cont == 0) {
         printf("Não há mais perguntas disponíveis para o nível %d.\n", nivel);
-        return;
+        return;//caso não tenha mais perguntas(por precaução;
     }
 
     // Sorteia uma das perguntas filtradas
@@ -203,7 +203,7 @@ void jogar() {
 
             if (toupper(resp) == toupper(p.letra)) {
                 printf("✅ Correto!\n");
-                totalAcertos++;
+                totalAcertos++;//caso acerte;
             } else {
                 printf("❌ Errado! Resposta correta: %c\n", p.letra);
                 printf("Fim de jogo! Você acertou %d perguntas.\n", totalAcertos);
@@ -218,13 +218,13 @@ void jogar() {
             scanf(" %c", &escolha);
             if (toupper(escolha) != 'S') {
                 printf("Você desistiu. Total de acertos: %d\n", totalAcertos);
-                return;
+                return;//caso desista de jogar;
             }
         }
     }
 
-    printf("\nParabéns! Você completou todas as perguntas com %d acertos.\n", totalAcertos);
-}
+    printf("\nParabéns! Você completou todas as perguntas com %d acertos.\n", totalAcertos);//mensagem de vitória
+}//jogo
 
 void menu() {
     int opcao;
@@ -257,7 +257,7 @@ int main() {
     if (totalPerguntas == 0) {
         printf("Bem-vindo! Carregando perguntas do CSV...\n");
         carregarPerguntasCSV("onepiece.csv");
-    }
+    }//mensagem de inicialização;
     menu();
     free(perguntas);
     return 0;
