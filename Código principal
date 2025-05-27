@@ -143,13 +143,13 @@ void excluirPergunta(int indice) {
     if (indice < 0 || indice >= totalPerguntas) {
         printf("Índice inválido!\n");
         return;
-    }
+    }//recebe o indice da pergunta, no caso o valor do vetor, se for indice 0, irá remover a pergunta 1, etc...;
 
     for (int i = indice; i < totalPerguntas - 1; i++) {
         perguntas[i] = perguntas[i + 1];
     }
     totalPerguntas--;
-    perguntas = realloc(perguntas, totalPerguntas * sizeof(Pergunta));
+    perguntas = realloc(perguntas, totalPerguntas * sizeof(Pergunta));//ajusta o tamanho da struct
 
     printf("Pergunta excluída com sucesso!\n");
 }//exclui uma pergunta;
