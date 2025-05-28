@@ -48,7 +48,7 @@ void carregarBinario(char* nomeArquivo) {
     FILE* arq = fopen(nomeArquivo, "rb");
     if (!arq) return;
     fread(&p.totalPerguntas, sizeof(int), 1, arq);
-    perguntas = malloc(totalPerguntas * sizeof(Pergunta));
+    perguntas = malloc(p.totalPerguntas * sizeof(Pergunta));
     fread(perguntas, sizeof(Pergunta), p.totalPerguntas, arq);
     fclose(arq);
 }//carrega o arquivo em binário;
@@ -107,8 +107,8 @@ void adicionarPergunta() {
 
     p.ativo = 1;
 
-    perguntas = realloc(perguntas, (totalPerguntas + 1) * sizeof(Pergunta));
-    perguntas[totalPerguntas++] = p;//add a pergunta;
+    perguntas = realloc(perguntas, (p.totalPerguntas + 1) * sizeof(Pergunta));
+    perguntas[p.totalPerguntas++] = p;//add a pergunta;
 
     printf("Pergunta adicionada com sucesso!\n");
 }//adiciona uma nova pergunta;
@@ -254,7 +254,7 @@ void menu() {
 int main() {
     Pergunta* perguntas = NULL;
     carregarBinario("perguntas.bin");
-    if (totalPerguntas == 0) {
+    if (p.totalPerguntas == 0) {
         printf("Bem-vindo! Carregando perguntas do CSV...\n");
         carregarPerguntasCSV("onepiece.csv");
     }//mensagem de inicialização;
