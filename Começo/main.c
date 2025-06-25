@@ -195,7 +195,13 @@ int main() {
 
         int indice;
         switch (opcao) {
-            case 1: jogarComRaylib(); break;
+            case 1: jogarComRaylib();
+                for(int i = 0; i < totalPerguntas; i++){
+
+            
+                perguntas[i].ativo = 1;
+                }//for
+                break;
             case 2: listarPerguntas(); break;
             case 3: adicionarPergunta(); break;
             case 4: exportarCSV("exportado.csv"); printf("Exportado com sucesso!\n"); break;
